@@ -6,7 +6,7 @@ var frames = new Array(4);
 
 document.addEventListener("DOMContentLoaded", function() {
   document.body.parentNode.style.height = "100%";
-  document.body.style.cssText = bodyCss;
+  document.getElementById("container").style.cssText = bodyCss;
   var i = frames.length;
   while (i--) {
     frames[i] = new Image();
@@ -39,23 +39,24 @@ function tryPlayback() {
     });
 }
 function showPlayButton() {
-  document.body.innerHTML = playButtonHtml;
-  document.body.style.backgroundImage = "url(" + frames[0].src + ")";
+  document.getElementById("container").innerHTML += playButtonHtml;
+  document.getElementById("container").style.backgroundImage = "url(" + frames[0].src + ")";
   window.addEventListener("click", tryPlayback, true);
 }
 function startPlayback() {
   window.addEventListener("click", muteHandler, true);
-  document.body.innerHTML = "";
+  document.getElementById("playButton").remove();
   audio.play();
   var frame = 0;
   setInterval(function() {
-    document.body.style.backgroundImage = "url(" + frames[frame].src + ")";
+    document.getElementById("container").style.backgroundImage = "url(" + frames[frame].src + ")";
     frame++;
     if (frames[frame] === undefined) frame = 0;
   }, 100);
+  Init();
 }
 function muteHandler() {
-  audio.muted = !audio.muted;
+  //audio.muted = !audio.muted;
 }
 function canPlay(audio) {
   var playHandler, timeout;
@@ -83,7 +84,7 @@ function canPlay(audio) {
 })(); // bodyCss
 (function() {
   playButtonHtml =
-    '<div style="' +
+    '<div id="playButton" style="' +
     "position:absolute;display:table;width:100%;height:100%;" +
     "background:no-repeat 50% 50%/contain;" +
     "cursor:pointer;font:4rem arial;text-shadow: 0 0 .5rem #fff;" +

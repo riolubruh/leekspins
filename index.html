@@ -5,19 +5,87 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Leekspin (html5)</title>
+  <meta property="og:site_name" content="LEEKSPIN DOT COM">
+  <meta property="og:title" content="LEEKSPIN DOT COM">
+  <meta property="og:description" content="LEEKSPIN DOT COM">
+  <title>LEEKSPIN DOT COM</title>
   <script src="data.js"></script>
   <script src="leekspins.js"></script>
+  <style>
+    footer{
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+      clear: both;
+      padding-top: 0.25em;
+      padding-bottom: 0.25em;
+    }
+    body {
+      box-sizing:border-box;
+      width:100%;
+      height:100%;
+      margin:0;
+      background:#000 no-repeat 50% 50%/contain;
+    }
+  </style>
 </head>
 
 <body>
   <noscript>
-    leekspins requires javascript to run, please enable it.
+    Please enable Javascript.
   </noscript>
-  <footer>Hosted with
-    <span class="redheart">&hearts;</span> on
-    <a href="https://surge.sh/">Surge</a>
-  </footer>
+
+  <script>
+    var time
+    var output
+
+    function Init(){
+      time = 1;
+      StartTimer()
+    }
+
+    function convertOutput(){
+      var hours = 0
+      var mins = 0
+      var secs = time
+      
+      while(secs >= 60){
+        secs -= 60;
+        mins += 1;
+      }
+      
+      if(secs < 10){
+        secs = "0" + secs;
+      }
+      
+      while(mins >= 60){
+        mins -= 60;
+        hours += 1;
+      }
+      
+      if(mins < 10){
+        mins = "0" + mins;
+      }
+      
+      output = hours + ":" + mins + ":" + secs;
+    }
+
+    function StartTimer(){
+      time += 1;
+      convertOutput();
+      document.getElementById("time").innerHTML = output;
+      self.setTimeout("StartTimer()", 1000);
+    }
+
+    var originalhtml = document.body.innerHTML;
+  </script>
+  <div class="container" id="container"></div>
 </body>
+<footer>
+  <div style="text-align: center; color: white; font-size: 14pt; font-weight: bold; --darkreader-inline-color: #e8e6e3;" data-darkreader-inline-color=""></div>
+    You've been spinning for <span id="time">0:00:00</span>.<br>
+  </div>
+</footer>
 
 </html>
